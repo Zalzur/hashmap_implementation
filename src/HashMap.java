@@ -1,12 +1,12 @@
 import java.util.LinkedList;
 
-class HashMap<String, Integer> {
+class HashMap<K, V> {
 
     class KeyValue {
-        public String key;
-        public Integer value;
+        public K key;
+        public V value;
 
-        public KeyValue(String key, Integer value) {
+        public KeyValue(K key, V value) {
             this.key = key;
             this.value = value;
         }
@@ -15,7 +15,7 @@ class HashMap<String, Integer> {
     private int bucketSize = 16;
     private LinkedList<KeyValue>[] elements = new LinkedList[bucketSize];
 
-    public void add(String key, Integer value) {
+    public void add(K key, V value) {
         int position = getHash(key);
         LinkedList list = elements[position];
 
@@ -37,7 +37,7 @@ class HashMap<String, Integer> {
         elements[position] = list;
     }
 
-    public Integer getValue(String key) {
+    public V getValue(K key) {
         // 1. Calculate the hash of the key. This defines which element to get from the "elements" array
         int position = getHash(key);
         LinkedList list = elements[position];
@@ -56,7 +56,7 @@ class HashMap<String, Integer> {
         throw new NullPointerException("There is no such key in the map.");
     }
 
-    public void remove(String key) {
+    public void remove(K key) {
         int position = getHash(key);
         LinkedList list = elements[position];
         boolean isRemoved = false;
@@ -81,7 +81,7 @@ class HashMap<String, Integer> {
         elements = new LinkedList[bucketSize];
     }
 
-    private int getHash(String key) {
+    private int getHash(K key) {
         return Math.abs(key.hashCode() % bucketSize);
     }
 }
